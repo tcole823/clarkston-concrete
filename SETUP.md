@@ -14,51 +14,25 @@ The repository `tcole823/clarkston-concrete` exists and the connected GitHub app
 
 Git automatic deployment still requires linking this existing Vercel project to the repository. Remaining Cloudflare changes are being handled through account access where available. The DNS records below document the required configuration, rather than tasks the client should perform manually.
 
-## 3. Verify the separate email sender domain
+## One-time access connection, preferred
 
-The domain `clarkstonconcrete.sitesbytc.com` is already created in Resend. The proposed review sender is `Clarkston Concrete <estimates@clarkstonconcrete.sitesbytc.com>`. It is configured in this Vercel project but cannot send until verification succeeds.
+Cloudflare has an official OAuth MCP server at `https://mcp.cloudflare.com/mcp`. In ChatGPT Plugins, use the plus button and Add custom MCP server. Name: `Cloudflare API`. Description: `Manage TC Design website DNS and Turnstile setup`. Connection: public HTTPS endpoint. Authentication: OAuth. Authorize in the user's normal browser with the minimum DNS and Turnstile permissions available. Account/workspace policies can affect availability. No cloud-browser login or pasted API key is needed for this route.
 
-Add these records to the same Cloudflare `sitesbytc.com` zone. Names below are relative to that zone. Keep CNAME records DNS only.
+After the connection becomes available, the assistant should inspect account identity and the `sitesbytc.com` zone, apply `docs/provisioning/clarkston-concrete.json`, verify the existing Resend domain and deploy. Restrict DNS changes to the named project records and preserve unrelated records. Install the Turnstile secret directly as a Vercel Secret. Do not print it or commit it.
 
-| Type | Name | Value | Priority | TTL |
-| --- | --- | --- | --- | --- |
-| TXT | `resend._domainkey.clarkstonconcrete` | `p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDMHJsbrh6+tTP11vpgLp4tCnS24K8xYYa3++05lHqC+Ubg44FPbNlxJBNDtHqm3G6v0B7gudX5WMewJrvSeuizZRCBAgB+zVPZbNHfeRnWZtN/UVXW4xKUS0osVXDOx6kcy8GPJa8L0FLbR8csS3hHv8qCynCc85X/YEa2ViUytQIDAQAB` | None | Auto |
-| MX | `send.clarkstonconcrete` | `feedback-smtp.us-east-1.amazonses.com` | 10 | Auto |
-| TXT | `send.clarkstonconcrete` | `v=spf1 include:amazonses.com ~all` | None | Auto |
-| CNAME | `rsend.clarkstonconcrete` | `send.forge.rmta.net` | None | Auto |
+## Fallback for this site only
 
-These are the records returned by Resend for this specific domain. Open Resend → Domains → `clarkstonconcrete.sitesbytc.com` → Verify DNS Records. Wait for verified status.
+If custom MCP connections are unavailable, the email records are prepared in `docs/provisioning/clarkston-concrete-dns.txt`. In the normal Cloudflare browser session: `sitesbytc.com` → DNS → Records → Import and Export. Import this file and uncheck Proxy imported DNS records. The file contains only the four sender records, not the working website record or any root email records. Tell the assistant when import completes; it can run Resend verification.
 
-The domain-restricted sending key is already installed in Vercel. Sender DNS verification is still pending.
+The only remaining Cloudflare object is a Managed Turnstile widget named `Clarkston Concrete estimate form`, with allowed hostnames `clarkstonconcrete.sitesbytc.com` and `clarkston-concrete.vercel.app`. Without direct account access, create this widget in the normal browser and enter its keys directly into Vercel: public key `PUBLIC_TURNSTILE_SITE_KEY` (Config), secret key `TURNSTILE_SECRET_KEY` (Secret), for Production and Preview. Keep secret values out of chat. The assistant can then redeploy and test.
 
-## 4. Configure Cloudflare Turnstile
+The independent Resend key is already installed. `SITE_LIVE=false`, email recipient, email sender and allowed review origin are already configured privately in Vercel. Do not create another Resend key.
 
-Open Cloudflare → Turnstile → Add widget:
+## Reusable automation
 
-- Widget name: `Clarkston Concrete estimate form`
-- Widget mode: Managed
-- Allowed hostnames: `clarkstonconcrete.sitesbytc.com` and `clarkston-concrete.vercel.app`
+`docs/provisioning/standard-workflow.md` records the standard client setup. `scripts/provision-cloudflare.mjs` provides a direct API fallback for an authenticated local/CI operator. It defaults to a plan with no network requests, checks existing records and widget settings before any write, rejects conflicts, creates missing records only, reuses the project widget and passes its keys directly to Vercel. It never changes site live mode. Real API application awaits authentication; mocked tests and the plan command have passed.
 
-Add the generated values directly in Vercel → `clarkston-concrete` → Settings → Environment Variables:
-
-| Variable | Value | Environments |
-| --- | --- | --- |
-| `PUBLIC_TURNSTILE_SITE_KEY` | The widget's site key | Production, Preview, Development |
-| `TURNSTILE_SECRET_KEY` | The widget's secret key | Production, Preview, Development |
-| `RESEND_API_KEY` | The new restricted sending key | Production, Preview, Development |
-
-Already configured in Vercel:
-
-| Variable | Current value |
-| --- | --- |
-| `SITE_LIVE` | `false` |
-| `ESTIMATE_TO` | `Configured privately in Vercel` |
-| `ESTIMATE_FROM` | `Clarkston Concrete <estimates@clarkstonconcrete.sitesbytc.com>` |
-| `FORM_ALLOWED_ORIGINS` | `https://clarkston-concrete.vercel.app` |
-
-The server also accepts the intended review host automatically. Add any other test origin explicitly if needed and add its hostname to Turnstile. All advertising IDs remain unset.
-
-Redeploy the newest deployment after adding environment variables. Test through the form at the intended review address and confirm Rob receives the notification before relying on online estimates. A successful API response means Resend accepted the message, not that inbox delivery has been confirmed.
+Automatic deployments for the current project still require its Git link. The existing Vercel connector cannot attach an unlinked project. In the user's regular Vercel browser session, open TC Design → clarkston-concrete → Settings → Git → Connect Git Repository, select `tcole823/clarkston-concrete` and branch `main`. This is an exception for this existing project; future projects should be created linked from the start through the Vercel connector.
 
 ## 5. Rob's content review
 
@@ -82,8 +56,8 @@ Conversion events are gated by live mode, the approved permanent hostname and a 
 ## Verification
 
 - Build: passed on Node 24 and deployed successfully on Vercel.
-- Nine automated tests passed: server validation, origins, spam checks, Turnstile hostname, provider failure, successful mocked Resend acceptance, direct/expired thank-you visits, disabled review tracking and conversion deduplication.
+- Fourteen automated tests passed: server validation, origins, spam checks, Turnstile hostname, provider failure, successful mocked Resend acceptance, direct/expired thank-you visits, disabled review tracking and conversion deduplication.
 - Desktop layout inspected at 1363px. All three photo assets loaded and no horizontal overflow was observed.
 - Mobile layouts inspected inside browser frames at 390px and 320px. Mobile menu open/close tested and no horizontal overflow observed. This is viewport layout verification, not a physical iPhone/Android test.
 - Deployed unconfigured form returns an unavailable message and stays on the form; no success confirmation is shown.
-- Real Turnstile verification and inbox delivery still require the credentials/DNS above.
+- Real Turnstile verification and inbox delivery still await Cloudflare access or the fallback steps above.

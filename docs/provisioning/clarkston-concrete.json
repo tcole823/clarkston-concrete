@@ -1,0 +1,40 @@
+{
+  "zone": "sitesbytc.com",
+  "namespace": "clarkstonconcrete.sitesbytc.com",
+  "records": [
+    {
+      "type": "TXT",
+      "name": "resend._domainkey.clarkstonconcrete.sitesbytc.com",
+      "content": "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDMHJsbrh6+tTP11vpgLp4tCnS24K8xYYa3++05lHqC+Ubg44FPbNlxJBNDtHqm3G6v0B7gudX5WMewJrvSeuizZRCBAgB+zVPZbNHfeRnWZtN/UVXW4xKUS0osVXDOx6kcy8GPJa8L0FLbR8csS3hHv8qCynCc85X/YEa2ViUytQIDAQAB"
+    },
+    {
+      "type": "MX",
+      "name": "send.clarkstonconcrete.sitesbytc.com",
+      "content": "feedback-smtp.us-east-1.amazonses.com",
+      "priority": 10
+    },
+    {
+      "type": "TXT",
+      "name": "send.clarkstonconcrete.sitesbytc.com",
+      "content": "v=spf1 include:amazonses.com ~all"
+    },
+    {
+      "type": "CNAME",
+      "name": "rsend.clarkstonconcrete.sitesbytc.com",
+      "content": "send.forge.rmta.net",
+      "proxied": false
+    }
+  ],
+  "widget": {
+    "name": "Clarkston Concrete estimate form",
+    "mode": "managed",
+    "domains": [
+      "clarkstonconcrete.sitesbytc.com",
+      "clarkston-concrete.vercel.app"
+    ]
+  },
+  "vercel": {
+    "projectId": "prj_Ex04mqFV8lSDozcODpj1GhP069F0",
+    "teamId": "team_acCRO7MO9H4rrVV5YlhP2m9e"
+  }
+}

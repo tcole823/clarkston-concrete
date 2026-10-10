@@ -1,0 +1,8 @@
+; Clarkston Concrete sender verification only. Website DNS is already configured.
+; Import in the sitesbytc.com zone. Uncheck Proxy imported DNS records.
+$ORIGIN sitesbytc.com.
+$TTL 300
+resend._domainkey.clarkstonconcrete.sitesbytc.com. 300 IN TXT "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDMHJsbrh6+tTP11vpgLp4tCnS24K8xYYa3++05lHqC+Ubg44FPbNlxJBNDtHqm3G6v0B7gudX5WMewJrvSeuizZRCBAgB+zVPZbNHfeRnWZtN/UVXW4xKUS0osVXDOx6kcy8GPJa8L0FLbR8csS3hHv8qCynCc85X/YEa2ViUytQIDAQAB"
+send.clarkstonconcrete.sitesbytc.com. 300 IN MX 10 feedback-smtp.us-east-1.amazonses.com.
+send.clarkstonconcrete.sitesbytc.com. 300 IN TXT "v=spf1 include:amazonses.com ~all"
+rsend.clarkstonconcrete.sitesbytc.com. 300 IN CNAME send.forge.rmta.net.
