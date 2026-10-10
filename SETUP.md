@@ -17,7 +17,7 @@ The site was deployed successfully directly from GitHub main with the latest cre
 ## Remaining technical checks
 
 1. Recheck Resend domain verification and confirm delivery after it reports verified. The four records resolve publicly with the required values.
-2. Finish one clearly labeled test form submission. The cloud browser displays an interactive human-verification checkbox. Completing this CAPTCHA requires action-time user confirmation under the browser policy. No submission or real inbox delivery has yet been verified with the production widget.
+2. Finish one clearly labeled test form submission. The user approved the real Cloudflare checkbox test. The browser displayed Success, but server-side Siteverify rejected the response with `invalid-input-response`; hostname and action matched. The attempt was rejected safely without email or success confirmation. An authorized retry after adding bounded diagnostics produced the same result. Stop retrying this cloud browser, preserve validation, and complete delivery verification through a normal-browser test after sender verification. No production submission or inbox delivery has yet been verified.
 3. Attach the existing project for automatic deployments: in the user's normal Vercel session, open TC Design → clarkston-concrete → Settings → Git → Connect Git Repository, select `tcole823/clarkston-concrete`, branch `main`. The connector can deploy Git source but cannot attach an existing unlinked project. Direct deployments already work; future projects should be created Git-linked from the start.
 
 ## Reusable automation
@@ -39,5 +39,5 @@ Configure the approved permanent domain in `src/company.mjs` and Vercel, confirm
 - Node 24 build and Git-source Vercel deployment passed.
 - All 14 tests passed: server validation, origins, spam checks, Turnstile hostname/action, provider failures, mocked success, thank-you guards, disabled review tracking, conversion deduplication and provisioning safety.
 - Desktop layout inspected at 1363px; mobile layouts at 390px and 320px. Photos load, navigation works, and no horizontal overflow was observed. These were viewport checks, not physical device tests.
-- Deployed unconfigured form previously returned an unavailable message without false confirmation. The configured widget now renders a real human-verification checkbox.
+- Deployed unconfigured form previously returned an unavailable message without false confirmation. The configured widget renders a real human-verification checkbox. Both approved attempts showed widget success but were rejected by Siteverify as `invalid-input-response`; safe diagnostics contain only booleans and provider error codes, with no tokens, credentials or customer details.
 - End-to-end submission and provider-reported delivery remain pending the real widget interaction and sender verification.
