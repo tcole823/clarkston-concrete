@@ -3,18 +3,18 @@ export default {
  // Set only after Trevor and Rob confirm and configure a permanent domain.
  productionHost:'', phone:'(248) 535-1598',
  services:[
- {name:'Driveways',detail:'Plan the width, parking space and approach that fit your home. Discuss drainage, vehicle loads and the transition to your garage or street.'},
- {name:'Patios',detail:'Make room for the way you spend time outside. Consider furniture, door clearances, surface finish and where rainwater will go.'},
- {name:'Walkways',detail:'Connect the spaces you use every day. Talk through a comfortable width, changes in elevation and a practical route to your entry.'},
- {name:'Slabs',detail:'Start with what the pad needs to support. Size, thickness, base preparation and any required footings depend on the intended use.'},
- {name:'Replacement',detail:'Discuss cracked, uneven or worn concrete. Review what needs removal, the condition underneath and how the new surface will meet existing areas.'},
- {name:'Decorative finishes',detail:'Explore texture, color or patterns alongside a traditional broom finish. Confirm available finishes, traction and ongoing care before choosing.'}
+ {name:'Driveways',detail:'A cleaner approach to your home and room for everyday parking. Consider the width, vehicle loads and drainage that suit your property.'},
+ {name:'Patios',detail:'Create a comfortable place for dinner, conversation or a quiet afternoon outside. Leave room for furniture, movement and access to the house.'},
+ {name:'Walkways',detail:'Make the route to your door more welcoming and easier to navigate. A practical layout considers width, steps and changes in elevation.'},
+ {name:'Slabs',detail:'Give your planned structure or equipment a suitable foundation. The intended use guides the size, thickness, base and any required footings.'},
+ {name:'Replacement',detail:'Refresh concrete that has become cracked, uneven or worn. Removal and preparation help address what’s underneath and how the new surface meets its surroundings.'},
+ {name:'Decorative finishes',detail:'Add character with texture, color or patterns. Compare the look you want with traction and upkeep, alongside a traditional broom finish.'}
  ],
  faqs:[
- ['What affects the price of concrete work?','Square footage is a starting point. Removal and disposal, excavation, base preparation, thickness, access, drainage and the chosen finish can all affect the estimate. Share what is there now and how you want to use the space, then review exactly what is included.'],
- ['When can I walk or drive on new concrete?','Concrete keeps gaining strength after the surface looks dry. The mix, weather and curing method affect when it can take foot traffic, furniture or vehicles. Plan for a period without access and follow the project-specific instructions before using it. Ask for separate guidance for heavy vehicles.'],
- ['Will my new concrete crack?','Concrete can crack as it shrinks or moves. A suitable base, proper curing and correctly placed joints help manage that movement, but no concrete surface can be promised crack-free. Discuss the joint layout and how the slab will meet your house and existing concrete before the pour.'],
- ['What should I check before work begins?','Confirm permits or HOA requirements with the appropriate authority, plus who will handle approvals and utility locating. Identify private lines such as irrigation and landscape lighting, clear the agreed access route, and plan alternative parking if your driveway will be out of use.'],
- ['How should I care for concrete through a Michigan winter?','Keep drainage paths clear and follow the recommended cleaning and sealing instructions for your finish. Deicing chemicals can damage concrete, especially new surfaces. Ask which products to avoid and whether sand is appropriate for traction. Do not assume every sealer or maintenance schedule is the same.']
+ ['What affects the price of concrete work?','Size is only part of the picture. Removing old concrete, preparing the base, equipment access, drainage, thickness and finish all affect the scope. Share what’s there now and what you’d like to change so the estimate can account for your property.'],
+ ['When can I walk or drive on new concrete?','Concrete needs time to gain strength, even after it looks dry. Timing depends on the mix, weather and curing method, so follow the instructions for your project. Walking, moving furniture and driving can have different waiting periods; ask separately about heavy vehicles.'],
+ ['Will my new concrete crack?','Cracks can develop as concrete shrinks or the ground moves. Base preparation, curing and properly placed joints help manage that movement. Before the pour, discuss where joints will go and how the new concrete will meet your house or existing surfaces.'],
+ ['What should I check before work begins?','Check any permit or HOA requirements and agree on who handles approvals and utility locating. Point out private lines such as irrigation or landscape lighting, clear the agreed access route, and arrange other parking if your driveway will be out of use.'],
+ ['How should I care for concrete through a Michigan winter?','Keep drainage paths clear and follow the cleaning and sealing guidance for your finish. Deicing chemicals can damage concrete, especially when it’s new. Ask which products to avoid and what to use for traction during the first winter.']
  ]
 };
