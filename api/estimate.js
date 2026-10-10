@@ -28,7 +28,10 @@ export default async function handler(req,res) {
       if(!token)return reply(res,400,'Please complete the verification.');
       const verification=await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify',{method:'POST',body:new URLSearchParams({secret:process.env.TURNSTILE_SECRET_KEY,response:token}),signal:AbortSignal.timeout(8000)});
       const result=await verification.json();
-      if(!result.success||result.hostname!==new URL(req.headers.origin).hostname||result.action!=='estimate')return reply(res,400,'Verification expired. Please try again.');
+      if(!result.success||result.hostname!==new URL(req.headers.origin).hostname||result.action!=='estimate') {
+        console.warn('Estimate verification rejected', {success:result.success===true,hostnameMatches:result.hostname===new URL(req.headers.origin).hostname,actionMatches:result.action==='estimate',codes:Array.isArray(result['error-codes'])?result['error-codes']:[]});
+        return reply(res,400,'Verification expired. Please try again.');
+      }
     }
     const notification=await fetch('https://api.resend.com/emails',{method:'POST',headers:{Authorization:`Bearer ${process.env.RESEND_API_KEY}`,'Content-Type':'application/json','Idempotency-Key':`estimate/${body.requestId}`},body:JSON.stringify({from:process.env.ESTIMATE_FROM,to:process.env.ESTIMATE_TO.split(',').map(s=>s.trim()).filter(Boolean),...(email?{reply_to:email}:{}),subject:`${company.name} estimate request`,text:`New estimate request\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email||'Not provided'}\nCity / ZIP: ${city}\nProject: ${project}\nApproximate project size: ${squareFeet?`${squareFeet} square feet`:'Not provided'}\n\nDetails:\n${message||'Not provided'}\n\nRequest ID: ${body.requestId}`}),signal:AbortSignal.timeout(10000)});
     const result=await notification.json();
