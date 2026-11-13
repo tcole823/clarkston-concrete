@@ -1,7 +1,7 @@
 export default {
  name:'Clarkston Concrete', previewHost:'clarkstonconcrete.sitesbytc.com',
- // Set only after Trevor and Rob confirm and configure a permanent domain.
- productionHost:'', phone:'(248) 535-1598',
+ // Approved permanent domain.
+ productionHost:'clarkstonconcreteco.com', phone:'(248) 535-1598',
  services:[
  {name:'Driveways',detail:'A cleaner approach to your home and room for everyday parking. Consider the width, vehicle loads and drainage that suit your property.'},
  {name:'Patios',detail:'Create a comfortable place for dinner, conversation or a quiet afternoon outside. Leave room for furniture, movement and access to the house.'},
