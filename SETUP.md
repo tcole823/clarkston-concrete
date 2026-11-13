@@ -1,43 +1,43 @@
-# Clarkston Concrete: review and remaining setup
+# Clarkston Concrete: live website
 
-Review site: https://clarkstonconcrete.sitesbytc.com/
-Repository: https://github.com/tcole823/clarkston-concrete
-Vercel team: TC Design (`tc-design2`)
-Vercel project: `clarkston-concrete`
-Project ID: `prj_Ex04mqFV8lSDozcODpj1GhP069F0`
+Launched November 13, 2026.
 
-## Completed setup, October 10, 2026
+- Public website: https://clarkstonconcreteco.com/
+- Repository: https://github.com/tcole823/clarkston-concrete
+- Vercel team: TC Design (`tc-design2`)
+- Vercel project: `clarkston-concrete`
+- Project ID: `prj_Ex04mqFV8lSDozcODpj1GhP069F0`
 
-The connected Cloudflare OAuth integration works for DNS and Turnstile operations. The review website CNAME is DNS-only and all four Resend sender records resolve publicly. A separate Managed widget named `Clarkston Concrete estimate form` allows `clarkstonconcrete.sitesbytc.com` and `clarkston-concrete.vercel.app`. Its public key and sensitive secret were installed directly in this Vercel project. No secret is stored in source or printed in chat.
+## Website and DNS
 
-The independent Resend key named `Clarkston Concrete Website` is restricted to this site's sender domain and installed privately in Vercel. Sender, recipient and allowed origins are also configured privately. Resend domain verification has been triggered after public DNS resolution; the last provider status was pending. Do not create replacement credentials or duplicate DNS records.
+The apex and www records are DNS-only CNAME records pointing to the project-specific Vercel target returned during setup. HTTPS is active. The www hostname redirects to the apex with a permanent 308 response. Canonical URLs, structured data, robots.txt and the sitemap use the permanent hostname. Production has `SITE_LIVE=true`; Preview and Development retain `SITE_LIVE=false`.
 
-The site was deployed successfully directly from GitHub main with the latest credentials. It remains a client review preview: noindex/nofollow, robots disallow-all, empty sitemap, `SITE_LIVE=false`, advertising and analytics disabled. No database or paid add-on is used. The permanent domain awaits approval.
+The former review hostname uses a narrowly scoped Cloudflare redirect rule in the sitesbytc.com zone, phase `http_request_dynamic_redirect`, matching only `clarkstonconcrete.sitesbytc.com` and preserving the path and query string. Only that legacy website DNS record is proxied for this edge redirect. The verified sender DNS records remain unchanged. The Vercel config also includes legacy alias redirect rules.
 
-## Remaining technical checks
+## Form and email verification
 
-1. Recheck Resend domain verification and confirm delivery after it reports verified. The four records resolve publicly with the required values.
-2. Finish one clearly labeled test form submission. The user approved the real Cloudflare checkbox test. The browser displayed Success, but server-side Siteverify rejected the response with `invalid-input-response`; hostname and action matched. The attempt was rejected safely without email or success confirmation. An authorized retry after adding bounded diagnostics produced the same result. Stop retrying this cloud browser, preserve validation, and complete delivery verification through a normal-browser test after sender verification. No production submission or inbox delivery has yet been verified.
-3. Attach the existing project for automatic deployments: in the user's normal Vercel session, open TC Design → clarkston-concrete → Settings → Git → Connect Git Repository, select `tcole823/clarkston-concrete`, branch `main`. The connector can deploy Git source but cannot attach an existing unlinked project. Direct deployments already work; future projects should be created Git-linked from the start.
+The existing dedicated Resend sending domain is fully verified: DKIM and sending records all report verified. The domain-restricted API key, approved sender and business recipient remain configured privately in Vercel. Notification mail continues to use the already verified branded sender under clarkstonconcrete.sitesbytc.com; using the permanent website domain does not require changing that sender.
 
-## Reusable automation
+The Managed Turnstile widget `Clarkston Concrete estimate form` now permits `clarkstonconcreteco.com` as well as the original review hosts. Server-side hostname and action checks remain enforced. No credentials are exposed in source.
 
-`docs/provisioning/standard-workflow.md` documents the standard client setup. The preferred route is the already-connected official Cloudflare OAuth MCP integration. It avoids cloud-browser sign-in and manual credential copying. Preserve unrelated records, use separate widgets and domain-restricted email keys for each client, and do not use purchase, upgrade, registrar or billing operations. Functional DNS/Turnstile access is verified; the API results do not independently audit every granted billing permission.
-
-`scripts/provision-cloudflare.mjs` remains an optional direct API fallback for an authenticated operator. It defaults to a plan without network requests, preflights conflicts, creates missing records only, reuses a matching widget and passes widget keys directly to Vercel. No manual DNS import or widget creation is needed for this site now. The DNS manifest and import file are retained as configuration records.
-
-## Rob's content review
-
-Confirm actual services among driveways, patios, walkways, slabs, replacement and decorative finishes; available finishes and limitations; service-area boundaries; contact routing and sender address; estimate, permit, utility-locating, removal, cleanup and curing practices; and permanent domain. Authentic project photos can replace the licensed illustrative stock photography. Stock images are explicitly identified and never described as Rob's work. No experience, reviews, insurance, warranties, pricing or completion guarantees are invented.
-
-## Before public launch
-
-Configure the approved permanent domain in `src/company.mjs` and Vercel, confirm services and remove review notes, update privacy details for final tracking, add the permanent hostname to Turnstile and test email delivery again. Only then set `SITE_LIVE=true`, configure project-specific tracking IDs and redeploy. The build refuses live mode without a permanent hostname. Conversion events require a recent successful submission on the approved live hostname and use a random request ID for deduplication, with no customer details in tracking.
+A real browser launch test on the permanent domain passed Turnstile automatically, submitted successfully and reached `/thank-you/`. Resend confirmed the resulting `Clarkston Concrete estimate request` message was delivered to the configured recipient at 19:25 UTC on November 13, 2026. The test name clearly identified it as a website launch test requiring no response. Provider-reported delivery confirms acceptance by the recipient mail system, not that the recipient read the message.
 
 ## Verification
 
-- Node 24 build and Git-source Vercel deployment passed.
-- All 14 tests passed: server validation, origins, spam checks, Turnstile hostname/action, provider failures, mocked success, thank-you guards, disabled review tracking, conversion deduplication and provisioning safety.
-- Desktop layout inspected at 1363px; mobile layouts at 390px and 320px. Photos load, navigation works, and no horizontal overflow was observed. These were viewport checks, not physical device tests.
-- Deployed unconfigured form previously returned an unavailable message without false confirmation. The configured widget renders a real human-verification checkbox. Both approved attempts showed widget success but were rejected by Siteverify as `invalid-input-response`; safe diagnostics contain only booleans and provider error codes, with no tokens, credentials or customer details.
-- End-to-end submission and provider-reported delivery remain pending the real widget interaction and sender verification.
+- All 14 automated checks passed before release, covering validation, origin and spam protection, provider errors, successful delivery response, confirmation guards and conversion deduplication.
+- Production build passed and deployment reached READY.
+- Permanent domain HTTPS returned 200; www returned a permanent redirect.
+- Live HTML uses the approved canonical URL and permits indexing. The thank-you page remains noindex.
+- Live config has the permanent hostname, live mode and the correct public widget key. No analytics or advertising identifiers are configured.
+- The actual form success page was inspected at a 1363px viewport with no horizontal overflow.
+- Runtime error scan for the launch window found no error records.
+
+## Future updates
+
+Source is in GitHub and direct Git-source deployments through the connected Vercel tool work. The existing project is still not automatically linked to GitHub. This does not prevent the live website or assistant-triggered deployments. To enable automatic deployments on every push, connect `tcole823/clarkston-concrete`, branch `main`, in TC Design → clarkston-concrete → Settings → Git. Future projects should be created Git-linked from the start.
+
+Google Analytics and advertising tracking remain disabled until project-specific accounts and IDs are configured. Successful-submission tracking is prepared and deduplicated; no customer details are included in conversion events. Update the privacy wording when tracking is enabled.
+
+The source retains licensed stock photography labeled as illustrative. Authentic project photos can replace it when supplied. No claims about years in business, insurance, reviews, warranties, prices or completion guarantees have been invented.
+
+Reusable account provisioning guidance remains in `docs/provisioning/standard-workflow.md`; use separate client widgets and restricted sender keys, preserve unrelated DNS and never use purchase or billing operations.
