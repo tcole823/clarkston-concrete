@@ -36,8 +36,9 @@
       "source": "/:path*",
       "has": [
         {
-          "type": "host",
-          "value": "clarkstonconcrete.sitesbytc.com"
+          "type": "header",
+          "key": "host",
+          "value": "clarkstonconcrete\\.sitesbytc\\.com"
         }
       ],
       "destination": "https://clarkstonconcreteco.com/:path*",
@@ -47,8 +48,9 @@
       "source": "/:path*",
       "has": [
         {
-          "type": "host",
-          "value": "clarkston-concrete.vercel.app"
+          "type": "header",
+          "key": "host",
+          "value": "clarkston-concrete\\.vercel\\.app"
         }
       ],
       "destination": "https://clarkstonconcreteco.com/:path*",
@@ -58,8 +60,9 @@
       "source": "/:path*",
       "has": [
         {
-          "type": "host",
-          "value": "clarkston-concrete-tc-design2.vercel.app"
+          "type": "header",
+          "key": "host",
+          "value": "clarkston-concrete-tc-design2\\.vercel\\.app"
         }
       ],
       "destination": "https://clarkstonconcreteco.com/:path*",
